@@ -114,5 +114,4 @@ public class HighwayDTO implements Serializable, Comparable<HighwayDTO> {
 		return "HighwayDTO [id=" + id + ", number=" + number + ", highwayType=" + type + ", stateName=" + stateName
 				+ ", length=" + length + ", condition=" + condition + ", contractCompany=" + contractCompany + "]";
 	}
-
 }
