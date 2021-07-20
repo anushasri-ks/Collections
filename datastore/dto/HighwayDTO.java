@@ -2,7 +2,7 @@ package com.xworkz.datastore.dto;
 
 import java.io.Serializable;
 
-public class HighwayDTO implements Serializable{
+public class HighwayDTO implements Serializable, Comparable<HighwayDTO> {
 	private int id;
 	private int number;
 	private HighwayType type;
@@ -10,7 +10,7 @@ public class HighwayDTO implements Serializable{
 	private double length;
 	private boolean condition;
 	private String contractCompany;
-	
+
 	public HighwayDTO() {
 		super();
 	}
@@ -25,6 +25,19 @@ public class HighwayDTO implements Serializable{
 		this.length = length;
 		this.condition = condition;
 		this.contractCompany = contractCompany;
+	}
+
+	@Override
+	public int compareTo(HighwayDTO num) {
+		double max = num.getLength();
+		if (this.length == max)
+			return 0;
+		if (this.length > max)
+			return 1;
+		if (this.length < max)
+			return -1;
+
+		return 0;
 	}
 
 	public int getId() {
@@ -83,44 +96,23 @@ public class HighwayDTO implements Serializable{
 		this.contractCompany = contractCompany;
 	}
 
-	
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+	public boolean equals(Object ref) {
+		if (ref == null)
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		HighwayDTO other = (HighwayDTO) obj;
-		if (condition != other.condition)
-			return false;
-		if (contractCompany == null) {
-			if (other.contractCompany != null)
-				return false;
-		} else if (!contractCompany.equals(other.contractCompany))
-			return false;
-		if (id != other.id)
-			return false;
-		if (Double.doubleToLongBits(length) != Double.doubleToLongBits(other.length))
-			return false;
-		if (number != other.number)
-			return false;
-		if (stateName == null) {
-			if (other.stateName != null)
-				return false;
-		} else if (!stateName.equals(other.stateName))
-			return false;
-		return true;
+		if (ref instanceof HighwayDTO) {
+			HighwayDTO dt = (HighwayDTO) ref;
+			if (this.stateName.equals(dt.getStateName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "HighwayDTO [id=" + id + ", number=" + number + ", highwayType=" + type + ", stateName="
-				+ stateName + ", length=" + length + ", condition=" + condition + ", contractCompany=" + contractCompany
-				+ "]";
+		return "HighwayDTO [id=" + id + ", number=" + number + ", highwayType=" + type + ", stateName=" + stateName
+				+ ", length=" + length + ", condition=" + condition + ", contractCompany=" + contractCompany + "]";
 	}
-	
-	
-	
+
 }

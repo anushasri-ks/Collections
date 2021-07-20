@@ -2,6 +2,7 @@ package com.xworkz.datastore.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class HighwayDAOimpl implements HighwayDAO{
 		Iterator<HighwayDTO> highwayType = this.list.iterator();
 		while(highwayType.hasNext()) {
 			HighwayDTO highwayDTO = highwayType.next();
-			if(highwayDTO.getHighwayType() == type) {
+			if(highwayDTO.getHighwayType().equals(type)) {
 				collection.add(highwayDTO);	
 				}
 		}
@@ -119,30 +120,19 @@ public class HighwayDAOimpl implements HighwayDAO{
 
 	@Override
 	public HighwayDTO findByMaxLength() {
-		Iterator<HighwayDTO> itr =  this.list.iterator();
-		HighwayDTO dto = itr.next();
-		while(itr.hasNext()) {
-			HighwayDTO highwayDTO = itr.next();
-			if(highwayDTO.getLength() > dto.getLength()) {
-				System.out.println("Found By Maximum Length");
-				dto = highwayDTO;
-			}		
-		}
-		return dto;
+		HighwayDTO max = null;
+		 max=Collections.max(list);
+		System.out.println("max length : " + max);
+
+		return max;
 	}
 
 	@Override
 	public HighwayDTO findByMinLength() {
-		Iterator<HighwayDTO> itr = this.list.iterator();
-		HighwayDTO dto = itr.next();
-		while(itr.hasNext()) {
-			HighwayDTO highwayDTO = itr.next();
-			if(highwayDTO.getLength() < dto.getLength()) {
-				System.out.println("Found by minimum length");
-				dto = highwayDTO;
-			}
-		}
-		return dto;
+		HighwayDTO min = null;
+		 min=Collections.min(list);
+		System.out.println("min length : " + min);
+		return min;
 	}
 
 }
