@@ -3,7 +3,6 @@ package com.xworkz.datastore.dto;
 import java.io.Serializable;
 
 public class RiverDTO implements Serializable {
-
 	private String name;
 	private String origin;
 	private double length;
@@ -23,6 +22,19 @@ public class RiverDTO implements Serializable {
 		this.hydroPlant = hydroPlant;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj instanceof RiverDTO) {
+			RiverDTO other = (RiverDTO) obj;
+			if (this.name.equals(other.getName()))
+				return true;
+
+		}
+		return false;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -31,16 +43,36 @@ public class RiverDTO implements Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (obj instanceof RiverDTO) {
-			RiverDTO river = (RiverDTO) obj;
-			if (this.name.equals(river.getName()))
-				return true;
-		}
-		return false;
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public double getLength() {
+		return length;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+	public int getNoOfStatesInFlow() {
+		return noOfStatesInFlow;
+	}
+
+	public void setNoOfStatesInFlow(int noOfStatesInFlow) {
+		this.noOfStatesInFlow = noOfStatesInFlow;
+	}
+
+	public boolean isHydroPlant() {
+		return hydroPlant;
+	}
+
+	public void setHydroPlant(boolean hydroPlant) {
+		this.hydroPlant = hydroPlant;
 	}
 
 	@Override
@@ -48,4 +80,5 @@ public class RiverDTO implements Serializable {
 		return "RiverDTO [name=" + name + ", origin=" + origin + ", length=" + length + ", noOfStatesInFlow="
 				+ noOfStatesInFlow + ", hydroPlant=" + hydroPlant + "]";
 	}
+
 }

@@ -14,10 +14,11 @@ public interface TempleDAO {
 	TempleDTO findByName(String name);
 	TempleDTO findByLocation(String loc);
 	TempleDTO findByLocationAndName(String name,String location);
-	Collection<TempleDTO> findAll();
-	Collection<TempleDTO> findAllTempleByLocationStartsWith(char character);
-	Collection<TempleDTO> findAllTempleByEntryFeeGreaterThan(double cost);
-	Collection<TempleDTO> findAllTempleByNoOfPoojarisGreaterThan(int no);
 	String findLocationByName(String name);
-	Collection<String> findAllLocations();
+	
+	Collection<TempleDTO> findAll();
+	Collection<TempleDTO> findAllTempleByLocationStartWith(char character);
+	Collection<TempleDTO> findAllTempleByEntryFeeGreaterThan(double cost);
+	Collection<TempleDTO>findAllTempleByNoOfPoojarisGreaterThan(int no);
+	Collection<String> findAllLocation();
 }

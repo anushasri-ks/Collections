@@ -1,88 +1,105 @@
 package com.xworkz.datastore.dao;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
-public class HighwayDAOimpl implements HighwayDAO {
+import com.xworkz.datastore.dto.HighwayDTO;
+import com.xworkz.datastore.dto.HighwayType;
 
-	private List<HighwayDTO> list = new ArrayList<>();
+public class HighwayDAOimpl implements HighwayDAO{
+	private List<HighwayDTO> list = new ArrayList<HighwayDTO>();
+	
 	@Override
 	public boolean save(HighwayDTO dto) {
-		System.out.println("---added---\n"+dto);
+		System.out.println("dto=" +dto);
+		System.out.println("dto is added");
 		return list.add(dto);
 	}
 
 	@Override
 	public Collection<HighwayDTO> findAll() {
-		System.out.println("---found all---");
+		System.out.println("Found All");
 		return this.list;
 	}
 
 	@Override
 	public Collection<Integer> findAllNumber() {
+		Collection<Integer> collection = new ArrayList<>(); 
 		Iterator<HighwayDTO> itr = this.list.iterator();
-		Collection <Integer> collection = new ArrayList<>();
-		while (itr.hasNext()) {
+		while(itr.hasNext()) {
 			HighwayDTO highwayDTO = itr.next();
 			collection.add(highwayDTO.getNumber());
 		}
-		System.out.println("---Found all numbers---");
+		System.out.println("Found all number");
 		return collection;
 	}
 
 	@Override
 	public int totalItems() {
-		System.out.println("---Total Items---");
 		return list.size();
 	}
 
 	@Override
 	public Collection<HighwayDTO> findByHighwayType(HighwayType type) {
-		Collection<HighwayDTO> collection = new ArrayList<>();
-		Iterator<HighwayDTO> itr = this.list.iterator();
-		while (itr.hasNext()) {
-			HighwayDTO highwayDTO = itr.next();
-			if(highwayDTO.getHighwaytype() == type) {
-				collection.add(highwayDTO);
-			}
+		Collection<HighwayDTO> collection = new ArrayList<>(); 
+		Iterator<HighwayDTO> highwayType = this.list.iterator();
+		while(highwayType.hasNext()) {
+			HighwayDTO highwayDTO = highwayType.next();
+			if(highwayDTO.getHighwayType() == type) {
+				collection.add(highwayDTO);	
+				}
 		}
-		System.out.println("---found by HighwayType"+type+"---");
+		System.out.println("findByHighwayType");
 		return collection;
 	}
 
 	@Override
 	public Collection<HighwayDTO> findByStateName(String sname) {
 		Collection<HighwayDTO> collection = new ArrayList<>();
-		Iterator<HighwayDTO> itr = this.list.iterator();
-		while (itr.hasNext()) {
-			HighwayDTO highwayDTO = itr.next();
+		Iterator<HighwayDTO> stateName = this.list.iterator();
+		while(stateName.hasNext()) {
+			HighwayDTO highwayDTO = stateName.next();
 			if(highwayDTO.getStateName().equals(sname)) {
 				collection.add(highwayDTO);
 			}
 		}
-		System.out.println("---found by state name"+sname+"---");
+		System.out.println("findByStateName");
+		return collection;
+	}
+
+	@Override
+	public Collection<Integer> findNumberByStateName(String sname) {
+		Collection<Integer> collection = new ArrayList<>();
+		Iterator<HighwayDTO> itr = this.list.iterator();
+		while(itr.hasNext()) {
+			HighwayDTO highwayDTO = itr.next();
+			if(highwayDTO.getStateName().equals(sname)) {
+				collection.add(highwayDTO.getNumber());
+			}
+		}
+		System.out.println("findNumberByStateName");
 		return collection;
 	}
 
 	@Override
 	public boolean exist(HighwayDTO dto) {
-		System.out.println("---exist---");
+		System.out.println("exist");
 		return this.list.contains(dto);
 	}
 
 	@Override
 	public boolean isCondition(int number) {
 		Iterator<HighwayDTO> itr = this.list.iterator();
-		while (itr.hasNext()) {
+		while(itr.hasNext()) {
 			HighwayDTO highwayDTO = itr.next();
 			if(highwayDTO.getNumber() == number) {
-				System.out.println("---isCondition---");
+				System.out.println("isCondition");
 				return highwayDTO.getCondition();
 			}
 		}
-		System.out.println("No such number");
+		System.out.println("does not exist");
 		return false;
 	}
 
@@ -92,25 +109,25 @@ public class HighwayDAOimpl implements HighwayDAO {
 		while (itr.hasNext()) {
 			HighwayDTO highwayDTO = itr.next();
 			if(highwayDTO.getNumber() == no) {
-				System.out.println("---found length by number---");
+				System.out.println("Found Length By Number");
 				return highwayDTO.getLength();
 			}
 		}
-		System.out.println("no such number");
+		System.out.println("No such Number");
 		return 0;
 	}
 
 	@Override
 	public HighwayDTO findByMaxLength() {
-		Iterator<HighwayDTO> itr = this.list.iterator();
+		Iterator<HighwayDTO> itr =  this.list.iterator();
 		HighwayDTO dto = itr.next();
-		while (itr.hasNext()) {
+		while(itr.hasNext()) {
 			HighwayDTO highwayDTO = itr.next();
 			if(highwayDTO.getLength() > dto.getLength()) {
+				System.out.println("Found By Maximum Length");
 				dto = highwayDTO;
-			}
+			}		
 		}
-		System.out.println("---found by maximum length---");
 		return dto;
 	}
 
@@ -118,13 +135,14 @@ public class HighwayDAOimpl implements HighwayDAO {
 	public HighwayDTO findByMinLength() {
 		Iterator<HighwayDTO> itr = this.list.iterator();
 		HighwayDTO dto = itr.next();
-		while (itr.hasNext()) {
+		while(itr.hasNext()) {
 			HighwayDTO highwayDTO = itr.next();
 			if(highwayDTO.getLength() < dto.getLength()) {
+				System.out.println("Found by minimum length");
 				dto = highwayDTO;
 			}
 		}
-		System.out.println("---found by minimum length---");
 		return dto;
 	}
+
 }

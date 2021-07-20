@@ -60,6 +60,7 @@ public class TempleDTO implements Serializable{
 	public void setKalyani(boolean kalyani) {
 		this.kalyani = kalyani;
 	}
+	
 	public int getNoOfPoojaris() {
 		return noOfPoojaris;
 	}
