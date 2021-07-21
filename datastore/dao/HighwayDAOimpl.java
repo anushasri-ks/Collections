@@ -14,14 +14,14 @@ public class HighwayDAOimpl implements HighwayDAO{
 	
 	@Override
 	public boolean save(HighwayDTO dto) {
-		System.out.println("dto=" +dto);
-		System.out.println("dto is added");
+		System.out.println("dto = " +dto);
+		System.out.println("saved");
 		return list.add(dto);
 	}
 
 	@Override
 	public Collection<HighwayDTO> findAll() {
-		System.out.println("Found All");
+		System.out.println("findAll");
 		return this.list;
 	}
 
@@ -33,7 +33,7 @@ public class HighwayDAOimpl implements HighwayDAO{
 			HighwayDTO highwayDTO = itr.next();
 			collection.add(highwayDTO.getNumber());
 		}
-		System.out.println("Found all number");
+		System.out.println("findAllNumber");
 		return collection;
 	}
 
@@ -110,7 +110,7 @@ public class HighwayDAOimpl implements HighwayDAO{
 		while (itr.hasNext()) {
 			HighwayDTO highwayDTO = itr.next();
 			if(highwayDTO.getNumber() == no) {
-				System.out.println("Found Length By Number");
+				System.out.println("findLengthByNumber");
 				return highwayDTO.getLength();
 			}
 		}
@@ -122,16 +122,15 @@ public class HighwayDAOimpl implements HighwayDAO{
 	public HighwayDTO findByMaxLength() {
 		HighwayDTO max = null;
 		 max=Collections.max(list);
-		System.out.println("max length : " + max);
-
+		System.out.println("findByMaxLength");
 		return max;
 	}
 
 	@Override
 	public HighwayDTO findByMinLength() {
 		HighwayDTO min = null;
-		 min=Collections.min(list);
-		System.out.println("min length : " + min);
+		min = Collections.min(list);
+		System.out.println("findByMinLength");
 		return min;
 	}
 
