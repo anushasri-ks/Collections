@@ -1,9 +1,12 @@
 package com.xworkz.service;
 
+import com.xworkz.dao.TransformerDAO;
+import com.xworkz.dao.TransformerDAOimpl;
 import com.xworkz.dto.TransformerDTO;
 
 public class TransformerServiceImpl implements TransformerService {
 
+	private TransformerDAO dao = new TransformerDAOimpl();
 	@Override
 	public String validateAndSave(TransformerDTO dto) {
 		int valid = 0;
@@ -59,6 +62,7 @@ public class TransformerServiceImpl implements TransformerService {
 			}
 			if(valid == 6) {
 				System.out.println("*Validation success*");
+				dao.save(dto);
 				return "VALID";
 			}
 		}
