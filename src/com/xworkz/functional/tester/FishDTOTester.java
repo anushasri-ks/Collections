@@ -19,11 +19,11 @@ public class FishDTOTester {
 		list.add(dto1);
 		list.add(dto2);
 
-//		sorting nameAsc in ascending order
-		Comparator<FishDTO> name = new Comparator<FishDTO>() {
+//		sorting name in ascending order
+		Comparator<FishDTO> nameAsc = new Comparator<FishDTO>() {
 			@Override
 			public int compare(FishDTO o1, FishDTO o2) {
-				System.out.println("sorting nameAsc in ascending order");
+				System.out.println("sorting name in ascending order");
 				return o1.getName().compareTo(o2.getName());
 			}
 		};
