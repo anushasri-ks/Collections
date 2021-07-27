@@ -37,7 +37,7 @@ public class HabbaDTO implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		return 2;
+		return 7;
 	}
 
 	@Override
