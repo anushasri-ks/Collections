@@ -31,11 +31,12 @@ public class HabbaDAOimpl implements HabbaDAO {
 */
 	@Override
 	public HabbaDTO ondunaHuduku(HabbaSearch search) {
-	this.list.forEach((dto)-> {
+		List<HabbaDTO> l = new ArrayList<HabbaDTO>();
+		list.forEach((dto) -> {
 			if(search.huduku(dto))
-				list.add(dto);
+				l.add(dto);
 		});
-		return list.get(0);
+		return l.get(0);
 	}
 
 	@Override
