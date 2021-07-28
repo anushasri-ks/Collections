@@ -17,7 +17,7 @@ public class HabbaDAOimpl implements HabbaDAO {
 		return list.add(dto);
 	}
 
-	@Override
+/*	@Override
 	public HabbaDTO ondunaHuduku(HabbaSearch search) {
 		Iterator<HabbaDTO> itr = this.list.iterator();
 		HabbaDTO dto = null;
@@ -28,14 +28,15 @@ public class HabbaDAOimpl implements HabbaDAO {
 		}
 		return dto;
 	}
-/*		
-	list.forEach((dto)-> {
-			if(search.huduku(dto))
-				System.out.println(dto);
-		});
-		return null;
-	}
 */
+	@Override
+	public HabbaDTO ondunaHuduku(HabbaSearch search) {
+	this.list.forEach((dto)-> {
+			if(search.huduku(dto))
+				list.add(dto);
+		});
+		return list.get(0);
+	}
 
 	@Override
 	public Collection<HabbaDTO> yellavanuHuduku(HabbaSearch search) {
