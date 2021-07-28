@@ -19,23 +19,16 @@ public class HabbaDAOimpl implements HabbaDAO {
 
 	@Override
 	public HabbaDTO ondunaHuduku(HabbaSearch search) {
-		Iterator<HabbaDTO> itr = this.list.iterator();
-		HabbaDTO dto = null;
-		while (itr.hasNext()) {
-			HabbaDTO habbaDTO = itr.next();
-			if (search.huduku(habbaDTO))
-				dto = habbaDTO;
-		}
+		HabbaDTO dto=null;
+	list.forEach((d)-> {
+			if(search.huduku(d)){
+				dto=d;
+			return;
+			}
+	});
 		return dto;
 	}
-/*		
-	list.forEach((dto)-> {
-			if(search.huduku(dto))
-				System.out.println(dto);
-		});
-		return null;
-	}
-*/
+
 
 	@Override
 	public Collection<HabbaDTO> yellavanuHuduku(HabbaSearch search) {
