@@ -24,11 +24,13 @@ public class RogiTester {
 		dao.save(dto2);
 		dao.save(dto1);
 		
-		Optional<RogiDTO> dto = dao.findOne((id)-> id.getId() == 5);
-		System.out.println(dto);
+		Optional<RogiDTO> opt = dao.findOne((id)-> id.getId() == 5);
+		if(opt.isPresent())
+			System.out.println(opt);
 		
-		dto = dao.findOne((name)-> name.getName().equals("anusha"));
-		System.out.println(dto);
+		opt = dao.findOne((name)-> name.getName().equals("anusha"));
+		if(opt.isPresent())
+			System.out.println(opt);
 		
 		System.out.println(dao.totalSize());
 		
@@ -44,8 +46,6 @@ public class RogiTester {
 		collection = dao.findAll((baduku)->baduku.isBadukuGuarantee() == true);
 		for(RogiDTO rogiDTO: collection) {
 			System.out.println(rogiDTO);
-		}
-		
+		}		
 	}
-
 }
