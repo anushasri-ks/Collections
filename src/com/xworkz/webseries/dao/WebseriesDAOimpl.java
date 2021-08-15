@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import com.xworkz.webseries.constant.OTTPlatform;
+import com.xworkz.webseries.constant.genreType;
 import com.xworkz.webseries.dto.WebseriesDTO;
-import com.xworkz.webseries.jdbc.constant.OTTPlatform;
-import com.xworkz.webseries.jdbc.constant.genreType;
 
 public class WebseriesDAOimpl implements WebseriesDAO {
 

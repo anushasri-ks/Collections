@@ -2,6 +2,8 @@ package com.xworkz.customer.dto;
 
 import java.io.Serializable;
 
+import com.xworkz.customer.constant.Education;
+
 public class CustomerDTO implements Serializable {
 
 	private int id;

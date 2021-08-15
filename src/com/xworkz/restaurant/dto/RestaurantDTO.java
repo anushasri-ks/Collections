@@ -2,7 +2,7 @@ package com.xworkz.restaurant.dto;
 
 import java.io.Serializable;
 
-import com.xworkz.restuarant.jdbc.constant.RestaurantType;
+import com.xworkz.restaurant.constant.RestaurantType;
 
 public class RestaurantDTO implements Serializable {
 

@@ -1,10 +1,10 @@
 package com.xworkz.webseries.tester;
 
+import com.xworkz.webseries.constant.OTTPlatform;
+import com.xworkz.webseries.constant.genreType;
 import com.xworkz.webseries.dao.WebseriesDAO;
 import com.xworkz.webseries.dao.WebseriesDAOimpl;
 import com.xworkz.webseries.dto.WebseriesDTO;
-import com.xworkz.webseries.jdbc.constant.OTTPlatform;
-import com.xworkz.webseries.jdbc.constant.genreType;
 
 public class WebseriesSaveTester {
 

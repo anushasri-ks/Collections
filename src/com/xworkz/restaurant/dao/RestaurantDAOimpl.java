@@ -12,8 +12,8 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import com.xworkz.restaurant.constant.RestaurantType;
 import com.xworkz.restaurant.dto.RestaurantDTO;
-import com.xworkz.restuarant.jdbc.constant.RestaurantType;
 
 public class RestaurantDAOimpl implements RestaurantDAO {
 

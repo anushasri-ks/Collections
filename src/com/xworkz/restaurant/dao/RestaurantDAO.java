@@ -2,8 +2,8 @@ package com.xworkz.restaurant.dao;
 
 import java.util.Collection;
 
+import com.xworkz.restaurant.constant.RestaurantType;
 import com.xworkz.restaurant.dto.RestaurantDTO;
-import com.xworkz.restuarant.jdbc.constant.RestaurantType;
 
 public interface RestaurantDAO {
 

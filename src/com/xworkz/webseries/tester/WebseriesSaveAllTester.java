@@ -3,11 +3,11 @@ package com.xworkz.webseries.tester;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.xworkz.webseries.constant.OTTPlatform;
+import com.xworkz.webseries.constant.genreType;
 import com.xworkz.webseries.dao.WebseriesDAO;
 import com.xworkz.webseries.dao.WebseriesDAOimpl;
 import com.xworkz.webseries.dto.WebseriesDTO;
-import com.xworkz.webseries.jdbc.constant.OTTPlatform;
-import com.xworkz.webseries.jdbc.constant.genreType;
 
 public class WebseriesSaveAllTester {
 

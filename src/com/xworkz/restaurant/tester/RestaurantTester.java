@@ -1,9 +1,9 @@
 package com.xworkz.restaurant.tester;
 
+import com.xworkz.restaurant.constant.RestaurantType;
 import com.xworkz.restaurant.dao.RestaurantDAO;
 import com.xworkz.restaurant.dao.RestaurantDAOimpl;
 import com.xworkz.restaurant.dto.RestaurantDTO;
-import com.xworkz.restuarant.jdbc.constant.RestaurantType;
 
 public class RestaurantTester {
 

@@ -2,8 +2,8 @@ package com.xworkz.webseries.dto;
 
 import java.io.Serializable;
 
-import com.xworkz.webseries.jdbc.constant.OTTPlatform;
-import com.xworkz.webseries.jdbc.constant.genreType;
+import com.xworkz.webseries.constant.OTTPlatform;
+import com.xworkz.webseries.constant.genreType;
 
 public class WebseriesDTO implements Serializable, Comparable<WebseriesDTO>
 {

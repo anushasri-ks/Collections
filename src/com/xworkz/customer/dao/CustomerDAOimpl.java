@@ -14,8 +14,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import com.xworkz.customer.constant.Education;
 import com.xworkz.customer.dto.CustomerDTO;
-import com.xworkz.customer.dto.Education;
 
 public class CustomerDAOimpl implements CustomerDAO {
 
