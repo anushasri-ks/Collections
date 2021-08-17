@@ -56,43 +56,8 @@ public class CustomerDAOimpl implements CustomerDAO {
 
 	@Override
 	public void saveAll(Collection<CustomerDTO> collection) {
-		Collection<CustomerDTO> col = new ArrayList<>();
-		Connection tempConnection = null;
-		try (Connection connection = DriverManager.getConnection(url, user, password)) {
-			tempConnection = connection;
-			connection.setAutoCommit(false);
-			String query = "INSERT INTO customer_table(c_name, c_from, c_to, c_address, c_married, c_passport_no, c_education) VALUES(?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			collection.forEach(dto -> {
-				int aiId = 0;
-				try {
-					statement.setString(1, dto.getName());
-					statement.setString(2, dto.getFrom());
-					statement.setString(3, dto.getTo());
-					statement.setString(4, dto.getAddress());
-					statement.setBoolean(5, dto.isMarried());
-					statement.setInt(6, dto.getPassportNo());
-					statement.setString(7, dto.getEducation().toString());
-					statement.execute();
-					ResultSet resultSet = statement.getGeneratedKeys();
-					if (resultSet.next()) {
-						aiId = resultSet.getInt(1);
-					}
-					dto.setId(aiId);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				col.addAll(collection);
-			});
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			try {
-				tempConnection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}
+		System.out.println("Save All");
+		collection.forEach(dto -> save(dto));
 	}
 
 	@Override
@@ -101,21 +66,9 @@ public class CustomerDAOimpl implements CustomerDAO {
 		Optional<CustomerDTO> opt = Optional.empty();
 		try (Connection connection = DriverManager.getConnection(url, user, password)) {
 			String query = "SELECT * FROM customer_table";
-			PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			statement.execute();
-			ResultSet resultSet = statement.getResultSet();
+			ResultSet resultSet = resultSetByPreparedStatement(connection, query);
 			while (resultSet.next()) {
-				int id = resultSet.getInt("c_id");
-				String name = resultSet.getString("c_name");
-				String from = resultSet.getString("c_from");
-				String to = resultSet.getString("c_to");
-				String address = resultSet.getString("c_address");
-				boolean married = resultSet.getBoolean("c_married");
-				int passportNo = resultSet.getInt("c_passport_no");
-				String education = resultSet.getString("c_education");
-				CustomerDTO dto = new CustomerDTO(name, from, to, address, married, passportNo,
-						Education.valueOf(education));
-				dto.setId(id);
+				CustomerDTO dto = createDtoFromResultSetValues(resultSet);
 				if (predicate.test(dto)) {
 					opt = Optional.of(dto);
 				}
@@ -126,27 +79,22 @@ public class CustomerDAOimpl implements CustomerDAO {
 		return opt;
 	}
 
+	public ResultSet resultSetByPreparedStatement(Connection connection, String query) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(query);
+		statement.execute();
+		ResultSet resultSet = statement.getResultSet();
+		return resultSet;
+	}
+
 	@Override
 	public Collection<CustomerDTO> findAll() {
 		System.out.println("find all");
 		Collection<CustomerDTO> collection = new ArrayList<CustomerDTO>();
 		try (Connection connection = DriverManager.getConnection(url, user, password)) {
 			String query = "SELECT * FROM customer_table";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.execute();
-			ResultSet resultSet = statement.getResultSet();
+			ResultSet resultSet = resultSetByPreparedStatement(connection, query);
 			while (resultSet.next()) {
-				int id = resultSet.getInt("c_id");
-				String name = resultSet.getString("c_name");
-				String from = resultSet.getString("c_from");
-				String to = resultSet.getString("c_to");
-				String address = resultSet.getString("c_address");
-				boolean married = resultSet.getBoolean("c_married");
-				int passportNo = resultSet.getInt("c_passport_no");
-				String education = resultSet.getString("c_education");
-				CustomerDTO dto = new CustomerDTO(name, from, to, address, married, passportNo,
-						Education.valueOf(education));
-				dto.setId(id);
+				CustomerDTO dto = createDtoFromResultSetValues(resultSet);
 				collection.add(dto);
 			}
 		} catch (SQLException e) {
@@ -161,21 +109,9 @@ public class CustomerDAOimpl implements CustomerDAO {
 		Collection<CustomerDTO> collection = new ArrayList<CustomerDTO>();
 		try (Connection connection = DriverManager.getConnection(url, user, password)) {
 			String query = "SELECT * FROM customer_table";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.execute();
-			ResultSet resultSet = statement.getResultSet();
+			ResultSet resultSet = resultSetByPreparedStatement(connection, query);
 			while (resultSet.next()) {
-				int id = resultSet.getInt("c_id");
-				String name = resultSet.getString("c_name");
-				String from = resultSet.getString("c_from");
-				String to = resultSet.getString("c_to");
-				String address = resultSet.getString("c_address");
-				boolean married = resultSet.getBoolean("c_married");
-				int passportNo = resultSet.getInt("c_passport_no");
-				String education = resultSet.getString("c_education");
-				CustomerDTO dto = new CustomerDTO(name, from, to, address, married, passportNo,
-						Education.valueOf(education));
-				dto.setId(id);
+				CustomerDTO dto = createDtoFromResultSetValues(resultSet);
 				if (predicate.test(dto)) {
 					collection.add(dto);
 				}
@@ -192,21 +128,9 @@ public class CustomerDAOimpl implements CustomerDAO {
 		Collection<CustomerDTO> collection = new ArrayList<CustomerDTO>();
 		try (Connection connection = DriverManager.getConnection(url, user, password)) {
 			String query = "SELECT * FROM customer_table ORDER BY c_name DESC";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.execute();
-			ResultSet resultSet = statement.getResultSet();
+			ResultSet resultSet = resultSetByPreparedStatement(connection, query);
 			while (resultSet.next()) {
-				int id = resultSet.getInt("c_id");
-				String name = resultSet.getString("c_name");
-				String from = resultSet.getString("c_from");
-				String to = resultSet.getString("c_to");
-				String address = resultSet.getString("c_address");
-				boolean married = resultSet.getBoolean("c_married");
-				int passportNo = resultSet.getInt("c_passport_no");
-				String education = resultSet.getString("c_education");
-				CustomerDTO dto = new CustomerDTO(name, from, to, address, married, passportNo,
-						Education.valueOf(education));
-				dto.setId(id);
+				CustomerDTO dto = createDtoFromResultSetValues(resultSet);
 				collection.add(dto);
 			}
 		} catch (SQLException e) {
@@ -231,5 +155,19 @@ public class CustomerDAOimpl implements CustomerDAO {
 			e.printStackTrace();
 		}
 		return count;
+	}
+
+	public CustomerDTO createDtoFromResultSetValues(ResultSet resultSet) throws SQLException {
+		int id = resultSet.getInt("c_id");
+		String name = resultSet.getString("c_name");
+		String from = resultSet.getString("c_from");
+		String to = resultSet.getString("c_to");
+		String address = resultSet.getString("c_address");
+		boolean married = resultSet.getBoolean("c_married");
+		int passportNo = resultSet.getInt("c_passport_no");
+		String education = resultSet.getString("c_education");
+		CustomerDTO dto = new CustomerDTO(name, from, to, address, married, passportNo, Education.valueOf(education));
+		dto.setId(id);
+		return dto;
 	}
 }

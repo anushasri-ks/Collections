@@ -1,6 +1,7 @@
 package com.xworkz.customer.service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.xworkz.customer.dao.CustomerDAO;
@@ -38,32 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void ValidateAndSaveAll(Collection<CustomerDTO> collection) {
-		List<CustomerDTO> list = new ArrayList<>();
-		collection.forEach(dto->{
-			int validation = 0;
-			if (dto != null) {
-				String name = dto.getName();
-				if (name != null && !name.isEmpty() && name.length() > 3 && name.length() <= 20)
-					validation++;
-				String education = dto.getEducation().toString();
-				if (education != null && !education.isEmpty())
-					validation++;
-				int passportNo = dto.getPassportNo();
-				if (passportNo != 0)
-					validation++;
-				String from = dto.getFrom();
-				if (from != null && !from.isEmpty())
-					validation++;
-				String to = dto.getTo();
-				if (to != null && !to.isEmpty())
-					validation++;
-				if(validation == 5)
-					list.add(dto);
-			}
-		});
-		if(list.containsAll(collection)) {
-			dao.saveAll(collection);
-		}
+		dao.saveAll(collection);
 	}
 
 	@Override

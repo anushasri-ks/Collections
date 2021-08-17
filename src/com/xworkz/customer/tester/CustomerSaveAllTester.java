@@ -26,7 +26,6 @@ public class CustomerSaveAllTester {
 		
 		Collection<CustomerDTO> collection = Arrays.asList(dto1, dto2, dto3, dto4, dto5);
 		service.ValidateAndSaveAll(collection);
-		collection.forEach(r -> System.out.println(r));
 
 	}
 
