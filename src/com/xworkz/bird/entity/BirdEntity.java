@@ -1,4 +1,4 @@
-package com.xworkz.bird.dto;
+package com.xworkz.bird.entity;
 
 import java.io.Serializable;
 
