@@ -1,0 +1,45 @@
+Configuration<<class>>
+Configuration configure();
+Configuration addClass(Class ref);
+SessionFactory buildSessionFactory();
+
+SeesionFactory<<interface>>
+Session OpenSession();
+Session OpenSession(Connection connection);
+Session OpenSession(Connection connection, Interceptor interceptor);
+void close();
+
+Session<<interface>>
+void commit();
+void rollBack();
+
+Transaction
+Transaction beginTransaction();
+Transaction getTransaction();
+Serializable save(Object object);
+Serializable save(String entityName, Object object);
+Serializable update(String entityName, Object object);
+Serializable update(Object object);
+void delete(Object object);
+void delete(String entityName,Object object);
+Object get(Class clazz,Serializable id);
+Object get(Class clazz,Serializable id,LockMode lockMode);
+Object get(Class clazz,Serializable id,LockOptions lockOptions);
+Object get(String entityName,Serializable id);
+Object get(String entityName,Serializable id,LockMode lockMode);
+Object get(String entityName,Serializable id,LockOptions lockOptions);
+Object load(Class theClass,Serializable id,LockMode lockMode);
+Object load(Class theClass,Serializable id,LockOptions lockOptions);
+Object load(String entityName,Serializable id,LockMode lockMode);
+Object load(String entityName,Serializable id,LockOptions lockOptions);
+Object load(Class theClass,Serializable id);
+Object load(String entityName,Serializable id);
+void load(Object object,Serializable id);
+Connection close();
+
+Query
+Query createQuery(String queryString);
+SQLQuery createSQLQuery(String queryString);
+
+Creteria
+Criteria createCriteria(String entityName,String alias);
