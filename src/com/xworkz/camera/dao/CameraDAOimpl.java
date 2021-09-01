@@ -1,5 +1,7 @@
 package com.xworkz.camera.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,13 +14,13 @@ public class CameraDAOimpl implements CameraDAO {
 	private SessionFactory sf = SFUtil.getFactory();
 
 	@Override
-	public int save(CameraEntity entity) {
+	public void save(CameraEntity entity) {
 		try (Session session = sf.openSession()) {
 			Transaction trans = session.beginTransaction();
-			int pk = (int) session.save(entity);
-			trans.commit();
-			System.out.println("Saved entity : " + entity);
-			return pk;
+			System.out.println("Saved entity : " + session.save(entity));
+			session.flush();
+			session.clear();
+			trans.rollback();
 		}
 	}
 
@@ -32,27 +34,36 @@ public class CameraDAOimpl implements CameraDAO {
 	}
 
 	@Override
-	public CameraEntity updateNameById(int id, String name) {
+	public void updateNameById(int id, String name) {
 		try (Session session = sf.openSession()) {
 			Transaction trans = session.beginTransaction();
 			CameraEntity entity = session.get(CameraEntity.class, id);
 			entity.setName(name);
-			System.out.println("updated name by id : ");
+			System.out.println("updated name by id : "+ entity);
 			trans.commit();
-			return entity;
 		}
 	}
 
 	@Override
-	public CameraEntity deleteById(int id) {
+	public void deleteById(int id) {
 		try (Session session = sf.openSession()) {
 			Transaction trans = session.beginTransaction();
 			CameraEntity entity = session.get(CameraEntity.class, id);
 			session.delete(entity);
-			System.out.println("deleted by id : ");
+			System.out.println("deleted by id : "+ entity);
 			trans.commit();
-			return entity;
 		}
 	}
 
+	@Override
+	public void saveList(List<CameraEntity> camEntity) {
+		try (Session session = sf.openSession()) {
+			Transaction trans = session.beginTransaction();
+			camEntity.forEach(entity->{
+				session.save(entity);
+				System.out.println(entity);
+			});
+			trans.commit();
+		}
+	}
 }

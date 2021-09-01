@@ -20,7 +20,7 @@ public class SFUtil {
 			System.out.println("SF init started");
 			Configuration config = new Configuration().configure();
 			factory = config.buildSessionFactory();
-			System.out.println("SF init complete");
+			System.out.println("SF init completed");
 		} catch (HibernateException e) {
 			System.out.println("SF error in static block");
 			e.printStackTrace();
