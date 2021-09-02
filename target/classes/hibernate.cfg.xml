@@ -9,6 +9,7 @@
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">Anusha@1</property>
 		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
 		<mapping class="com.xworkz.camera.entity.CameraEntity" />
 		<!-- equivalent to addAnnotatedClass -->
 	</session-factory>

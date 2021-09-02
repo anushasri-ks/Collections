@@ -39,7 +39,7 @@ public class CameraDAOimpl implements CameraDAO {
 			Transaction trans = session.beginTransaction();
 			CameraEntity entity = session.get(CameraEntity.class, id);
 			entity.setName(name);
-			System.out.println("updated name by id : "+ entity);
+			System.out.println("updated name by id : " + entity);
 			trans.commit();
 		}
 	}
@@ -50,18 +50,33 @@ public class CameraDAOimpl implements CameraDAO {
 			Transaction trans = session.beginTransaction();
 			CameraEntity entity = session.get(CameraEntity.class, id);
 			session.delete(entity);
-			System.out.println("deleted by id : "+ entity);
+			System.out.println("deleted by id : " + entity);
 			trans.commit();
 		}
 	}
 
 	@Override
-	public void saveList(List<CameraEntity> camEntity) {
+	public void saveList(List<CameraEntity> entities) {
 		try (Session session = sf.openSession()) {
 			Transaction trans = session.beginTransaction();
-			camEntity.forEach(entity->{
+			entities.forEach(entity -> {
 				session.save(entity);
 				System.out.println(entity);
+			});
+			trans.commit();
+		}
+	}
+
+	@Override
+	public void deleteList(List<Integer> ids) {
+		try (Session session = sf.openSession()) {
+			Transaction trans = session.beginTransaction();
+			ids.forEach(entity -> {
+				CameraEntity camEntity = session.get(CameraEntity.class, entity);
+				if (ids.contains(entity)) {
+					session.delete(camEntity);
+					System.out.println(camEntity);
+				}
 			});
 			trans.commit();
 		}

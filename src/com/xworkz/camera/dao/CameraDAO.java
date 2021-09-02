@@ -10,6 +10,6 @@ public interface CameraDAO {
 	CameraEntity readById(int id);
 	void updateNameById(int id, String name);
 	void deleteById(int id);
-	void saveList(List<CameraEntity> camEntity);
-	
+	void saveList(List<CameraEntity> entities);
+	void deleteList(List<Integer> ids);
 }
