@@ -1,19 +1,20 @@
 package com.xworkz.mobile.tester;
 
-import com.xworkz.mobile.dao.MobileDAO;
-import com.xworkz.mobile.dao.MobileDAOimpl;
+import com.xworkz.mobile.service.MobileService;
+import com.xworkz.mobile.service.MobileServiceImpl;
 
 public class MobileTester {
 
 	public static void main(String[] args) {
-		
-		MobileDAO dao = new MobileDAOimpl();
-		dao.readAllRecords();
-		dao.ReadMobilePriceByBrand("Samsung");
-		dao.UpdateMobilePriceByBrand();
-		System.out.println("Total price : "+dao.readTotalPriceOfMobile());
-		System.out.println("Minimum price : "+dao.readMinPriceOfMobile());
-		System.out.println("Maximum price : "+dao.readMaxPriceOfMobile());
+
+		MobileService service = new MobileServiceImpl();
+		service.validateAndGetAllRecords();
+		service.validateAndGetPriceByBrand("Samsung");
+		service.validateAndUpdatePriceByBrand("Samsung");
+		service.validateAndDeleteRowById(1);
+		service.validateAndGetTotalPrice();
+		service.validateAndGetMinimumPrice();
+		service.validateAndGetMaximumPrice();
 	}
 
 }

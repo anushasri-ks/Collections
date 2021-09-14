@@ -7,10 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "mobile_table")
+@NamedQuery(name = "getAllRecords", query = "FROM MobileEntity")
+@NamedQuery(name = "getPriceByBrand", query = "SELECT mobile_table.price FROM MobileEntity mobile_table WHERE mobile_table.brand=:Brand")
+@NamedQuery(name = "updatePriceByBrand", query = "UPDATE MobileEntity mobile_table SET mobile_table.price=180000 WHERE mobile_table.brand=:Brand")
+@NamedQuery(name = "deleteRowById", query = "DELETE MobileEntity AS mobile_table WHERE mobile_table.id=:Id")
+@NamedQuery(name = "getTotalPrice", query = "SELECT sum(price) FROM MobileEntity")
+@NamedQuery(name = "getMaximumPrice", query = "SELECT max(price) FROM MobileEntity")
+@NamedQuery(name = "getMinimumPrice", query = "SELECT min(price) FROM MobileEntity")
+
 public class MobileEntity implements Serializable {
 
 	@Column(name = "m_id")
@@ -29,7 +38,6 @@ public class MobileEntity implements Serializable {
 	private String color;
 
 	public MobileEntity() {
-
 	}
 
 	public MobileEntity(String brand, String model, double price, boolean smart, String color) {

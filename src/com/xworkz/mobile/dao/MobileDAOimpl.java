@@ -1,180 +1,119 @@
 package com.xworkz.mobile.dao;
 
 import java.util.List;
-import java.util.Objects;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.xworkz.mobile.entity.MobileEntity;
+import com.xworkz.mobile.util.SFUtil;
 
 public class MobileDAOimpl implements MobileDAO {
 
-	private static SessionFactory factory = new Configuration().configure().buildSessionFactory();
+	private SessionFactory factory = SFUtil.getFactory();
 
 	@Override
-	public void readAllRecords() {
-		System.out.println("Reading all mobile records");
-		Session session = null;
-		try {
-			session = factory.openSession();
-			Query query = session.createQuery("FROM com.xworkz.mobile.entity.MobileEntity");
-			List<MobileEntity> list = query.list();
-			list.forEach(l -> System.out.println(l));
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		} finally {
-			if (Objects.nonNull(session)) {
-				session.close();
-				System.out.println("session is closed");
-			} else {
-				System.out.println("Session is not closed");
+	public int save(MobileEntity entity) {
+		int key = 0;
+		try (Session session = factory.openSession()) {
+			Transaction transaction = session.beginTransaction();
+			key = (int) session.save(entity);
+			session.flush();
+			transaction.commit();
+			return key;
+		}
+	}
+
+	@Override
+	public void getAllRecords() {
+		try (Session session = factory.openSession()) {
+			Query query = session.getNamedQuery("getAllRecords");
+			List<MobileEntity> entities = query.list();
+			System.out.println("Fetching all the records");
+			for (MobileEntity entity : entities) {
+				System.out.println(entity);
 			}
 		}
 	}
 
 	@Override
-	public double ReadMobilePriceByBrand(String brand) {
-		System.out.println("Reading mobile's price by brand");
-		Session session = null;
-		try {
-			session = factory.openSession();
-			Query query = session
-					.createQuery("SELECT mobile_table.price FROM MobileEntity mobile_table WHERE mobile_table.brand = "
-							+ "'" + brand + "'");
+	public double getPriceByBrand(String brand) {
+		double price = 0;
+		try (Session session = factory.openSession()) {
+			Query query = session.getNamedQuery("getPriceByBrand");
+			query.setParameter("Brand", brand);
 			Object object = query.uniqueResult();
 			if (object != null) {
-				Double price = (Double) object;
-				return price;
-			}
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		} finally {
-			if (Objects.nonNull(session)) {
-				session.close();
-				System.out.println("session is closed");
-			} else {
-				System.out.println("session is not closed");
+				price = (double) object;
+				System.out.println("Fetching price by brand" + price);
 			}
 		}
-		return 0;
+		return price;
 	}
 
 	@Override
-	public double UpdateMobilePriceByBrand() {
-		int result = 0;
-		System.out.println("updating mobile's price by brand");
-		org.hibernate.Session session = null;
-		try {
-			session = factory.openSession();
+	public void updatePriceByBrand(String brand) {
+		try (Session session = factory.openSession()) {
+			Query query = session.getNamedQuery("updatePriceByBrand");
+			query.setParameter("Brand", brand);
 			session.beginTransaction();
-			Query query = session.createQuery(
-					"UPDATE MobileEntity mobile_table SET mobile_table.price='30000' WHERE mobile_table.brand='One plus'");
-
-			result = query.executeUpdate();
-			System.out.println("Updated Successfully " + result);
+			System.out.println("Updated price by brand: " + query.executeUpdate());
 			session.getTransaction().commit();
-
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		} finally {
-			if (Objects.nonNull(session)) {
-				session.close();
-				System.out.println("Session is closed");
-			} else {
-				System.out.println("Session is not closed closed");
-			}
 		}
-		return result;
 	}
 
 	@Override
-	public double readTotalPriceOfMobile() {
-		System.out.println("Reading mobile's Total price");
-		org.hibernate.Session session = null;
-		try {
-			session = factory.openSession();
+	public void deleteRowById(int id) {
+		try (Session session = factory.openSession()) {
+			Query query = session.getNamedQuery("deleteRowById");
+			query.setParameter("Id", id);
 			session.beginTransaction();
-			Query query = session.createQuery(
-					"SELECT SUM(mobile_table.price) FROM MobileEntity mobile_table");
+			System.out.println("Deleted row by id: " + query.executeUpdate());
+			session.getTransaction().commit();
+		}
+	}
+
+	@Override
+	public double getTotalPrice() {
+		double price = 0;
+		try (Session session = factory.openSession()) {
+			Query query = session.getNamedQuery("getTotalPrice");
+			Object obj = query.uniqueResult();
+			if (obj != null) {
+				price = (double) obj;
+				System.out.println("Total price :" + price);
+			}
+		}
+		return price;
+	}
+
+	@Override
+	public double getMaximumPrice() {
+		double price = 0;
+		try (Session session = factory.openSession()) {
+			Query query = session.getNamedQuery("getMaximumPrice");
 			Object object = query.uniqueResult();
 			if (object != null) {
-				Double price = (Double) object;
-				return price;
-			}
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		} finally {
-			if (Objects.nonNull(session)) {
-				session.close();
-				System.out.println("Session is closed");
-			} else {
-				System.out.println("Session is not closed closed");
+				price = (double) object;
+				System.out.println("Maximum price :" + price);
 			}
 		}
-		return 0;
+		return price;
 	}
 
 	@Override
-	public double readMinPriceOfMobile() {
-		System.out.println("Reading mobile's minimum price");
-		org.hibernate.Session session = null;
-		try {
-			session = factory.openSession();
-			session.beginTransaction();
-			Query query = session.createQuery(
-					"SELECT MIN(mobile_table.price) FROM MobileEntity mobile_table");
-			Object object = query.uniqueResult();
-			if (object != null) {
-				Double price = (Double) object;
-				return price;
-			}
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		} finally {
-			if (Objects.nonNull(session)) {
-				session.close();
-				System.out.println("Session is closed");
-			} else {
-				System.out.println("Session is not closed closed");
+	public double getMinimumPrice() {
+		double price = 0;
+		try (Session session = factory.openSession()) {
+			Query query = session.getNamedQuery("getMinimumPrice");
+			Object obj = query.uniqueResult();
+			if (obj != null) {
+				price = (double) obj;
+				System.out.println("Minimum price :" + price);
 			}
 		}
-		return 0;
-	}
-
-	@Override
-	public double readMaxPriceOfMobile() {
-		System.out.println("Reading mobile's maximum price");
-		org.hibernate.Session session = null;
-		try {
-			session = factory.openSession();
-			session.beginTransaction();
-			Query query = session.createQuery(
-					"SELECT MAX(mobile_table.price) FROM MobileEntity mobile_table");
-			Object object = query.uniqueResult();
-			if (object != null) {
-				Double price = (Double) object;
-				return price;
-			}
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		} finally {
-			if (Objects.nonNull(session)) {
-				session.close();
-				System.out.println("Session is closed");
-			} else {
-				System.out.println("Session is not closed closed");
-			}
-		}
-		return 0;
-	}
-
-	@Override
-	public double readSumPriceOfMobile() {
-
-		return 0;
+		return price;
 	}
 }
