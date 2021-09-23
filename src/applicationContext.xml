@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:component-scan
+		base-package="com.xworkz.restaurant" />
+
+	<bean
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		id="localSessionFactoryBean">
+		<property name="dataSource" ref="driverManagerDataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="show_sql">$localSessionFactoryBean.hibernate.show_sql</prop>
+				<prop key="format_sql">$localSessionFactoryBean.hibernate.format_sql</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.xworkz.restaurant.entity.RestaurantEntity</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="driverManagerDataSource">
+		<constructor-arg name="url"
+			value="${driverManagerDataSource.url}"></constructor-arg>
+		<constructor-arg name="username"
+			value="${driverManagerDataSource.username}"></constructor-arg>
+		<constructor-arg name="password"
+			value="${driverManagerDataSource.password}"></constructor-arg>
+		<property name="driverClassName"
+			value="${driverManagerDataSource.driverClassName}"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="hibernate.properties"></property>
+	</bean>
+</beans>
